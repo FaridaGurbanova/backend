@@ -2,7 +2,9 @@ version: '3.1'
 
 services:
     app:
-        image: 'farida-gurbanova-be'
+        env_file:
+            - .env
+        image: 'farida-gurbanova-be:${TAG}'
         build: '.'
         ports:
             - 3001:3001
