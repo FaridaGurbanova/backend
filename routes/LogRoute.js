@@ -8,7 +8,7 @@ const logService = require('../services/LogService');
 
 router.post('/ipAddress', (req, res) => {
     const params = {
-        ipAddress: req.body.ipAddress
+        ipAddress: req.body.ip
     };
 
     logService.sendEmail(params, (error, status) => {
