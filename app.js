@@ -16,6 +16,7 @@ app.use(express.static(__dirname));
 
 
 app.use('/api', require('./routes/ContactRoute'));
+app.use('/api', require('./routes/LogRoute'));
 
 app.listen(3001, () => {
     console.log('Server Started Running');
