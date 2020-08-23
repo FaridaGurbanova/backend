@@ -7,6 +7,10 @@ const config = {
     },
     recipient: {
         email: ''
+    },
+    ipStack: {
+        server: '',
+        access_key: ''
     }
 }
 

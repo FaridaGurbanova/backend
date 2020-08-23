@@ -11,11 +11,11 @@ router.post('/ipAddress', (req, res) => {
         ipAddress: req.body.ip
     };
 
-    logService.sendEmail(params, (error, status) => {
+    logService.logVisit(params, (error, status) => {
         if (error) {
             res.status(error.status).json(error.msg);
         } else {
-            res.status(200).json('Request was sent successfully');
+            res.status(200).json(status);
         }
     });
 });

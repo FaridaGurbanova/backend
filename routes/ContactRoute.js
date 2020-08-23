@@ -11,14 +11,15 @@ router.post('/contact', (req, res) => {
     const params = {
         name: req.body.name,
         email: req.body.email,
-        message: req.body.message
+        message: req.body.message,
+        ipAddress: req.body.ip
     };
 
-    contactService.sendEmail(params, (error, status) => {
+    contactService.contactOwner(params, (error, status) => {
         if (error) {
             res.status(error.status).json(error.msg);
         } else {
-            res.status(200).json('Request was sent successfully');
+            res.status(200).json(status);
         }
     })       
 });
