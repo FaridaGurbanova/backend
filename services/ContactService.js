@@ -6,6 +6,7 @@ const _ = require('lodash');
 const emailUtility = require('../utils/EmailUtility');
 const config = require('../config');
 const ipUtility = require('../utils/IPUtility');
+const contactDao = require('../repositories/ContactDAO');
 
 
 
@@ -31,6 +32,27 @@ class ContactService {
             (callback) => {
                 ipUtility.fetchIpInfo(ipAddress)
                     .then((info) => {
+                        return callback(null, info);
+                    })
+                    .catch((error) => {
+                        return callback(error);
+                    })
+            },
+            // log the received message to database
+            (info, callback) => {
+                const messageInfo = {
+                    name: name,
+                    email: email,
+                    message: message,
+                    ipAddress: info.ip,
+                    city: info.city,
+                    country: info.country_name,
+                    latitude: info.latitude,
+                    longitude: info.longitude
+                };
+
+                contactDao.insertMessage(messageInfo)
+                    .then(() => {
                         return callback(null, info);
                     })
                     .catch((error) => {

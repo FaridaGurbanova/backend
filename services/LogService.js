@@ -5,6 +5,7 @@ const async = require('async');
 const emailUtility = require('../utils/EmailUtility');
 const config = require('../config');
 const ipUtility = require('../utils/IPUtility');
+const logDao = require('../repositories/LogDAO');
 
 
 
@@ -18,6 +19,24 @@ class LogService {
             (callback) => {
                 ipUtility.fetchIpInfo(ipAddress)
                     .then((info) => {
+                        return callback(null, info);
+                    })
+                    .catch((error) => {
+                        return callback(error);
+                    })
+            },
+            // create log entry in visitor table
+            (info, callback) => {
+                const log = {
+                    ipAddress: info.ip,
+                    city: info.city,
+                    country: info.country_name,
+                    latitude: info.latitude,
+                    longitude: info.longitude
+                };
+
+                logDao.insertLog(log)
+                    .then(() => {
                         return callback(null, info);
                     })
                     .catch((error) => {
