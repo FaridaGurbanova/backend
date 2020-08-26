@@ -11,11 +11,11 @@ router.post('/ipAddress', (req, res) => {
         ipAddress: req.body.ip
     };
 
-    logService.logVisit(params, (error, status) => {
+    logService.logVisit(params, (error, result) => {
         if (error) {
             res.status(error.status).json(error.msg);
         } else {
-            res.status(200).json(status);
+            res.status(result.status).json(result.msg);
         }
     });
 });

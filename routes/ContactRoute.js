@@ -15,11 +15,11 @@ router.post('/contact', (req, res) => {
         ipAddress: req.body.ip
     };
 
-    contactService.contactOwner(params, (error, status) => {
+    contactService.contactOwner(params, (error, result) => {
         if (error) {
             res.status(error.status).json(error.msg);
         } else {
-            res.status(200).json(status);
+            res.status(result.status).json(result.msg);
         }
     })       
 });

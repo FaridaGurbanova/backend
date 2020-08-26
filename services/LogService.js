@@ -22,7 +22,8 @@ class LogService {
                         return callback(null, info);
                     })
                     .catch((error) => {
-                        return callback(error);
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to fetch IP address'});
                     })
             },
             // create log entry in visitor table
@@ -40,7 +41,8 @@ class LogService {
                         return callback(null, info);
                     })
                     .catch((error) => {
-                        return callback(error);
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to save log'});
                     })
             },
             // send email as notification
@@ -55,18 +57,15 @@ class LogService {
                         return callback(null, info);
                     })
                     .catch((error) => {
-                        return callback({status : 500, msg : error});
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to send email'});
                     })
             }
         ], 
         
         // finalize
         (error) => {
-            if (error) { 
-                return fnCallback(error);
-            } else {
-                return fnCallback(null, 'Information logged successfully');
-            }
+            return fnCallback(error, {status: 200, msg: 'Information logged successfully'});
         });
     }
 };

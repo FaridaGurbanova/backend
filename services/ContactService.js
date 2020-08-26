@@ -35,7 +35,8 @@ class ContactService {
                         return callback(null, info);
                     })
                     .catch((error) => {
-                        return callback(error);
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to fetch IP address'});
                     })
             },
             // log the received message to database
@@ -56,7 +57,8 @@ class ContactService {
                         return callback(null, info);
                     })
                     .catch((error) => {
-                        return callback(error);
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to save message'});
                     })
             },
             // get user that was created
@@ -75,17 +77,14 @@ class ContactService {
                         return callback();
                     })
                     .catch((error) => {
-                        return callback({status : 500, msg : error});
+                        console.log(error);
+                        return callback({status : 500, msg : 'Not able to send message'});
                     })
             }
         ], 
         // finalize
         (error) => {
-            if (error) { 
-                return fnCallback(error);
-            } else {
-                return fnCallback(null, 'Message sent successfully');
-            }
+            return fnCallback(error, {status: 200, msg: 'Message sent successfully'});
         });
     };
 };
